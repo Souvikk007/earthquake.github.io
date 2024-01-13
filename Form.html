@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>REGISTER HERE</title>
+	<style>
+        *{
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif
+        }
+
+        body{
+            background: linear-gradient(80deg, #00b09b, #96c93d); /* Gradient background */
+             animation: colorChange 5s infinite alternate; /* Animation for color change */
+        }
+
+        @keyframes colorChange {
+            0% {
+                background: linear-gradient(80deg, #00b09b, #96c93d);
+            }
+            100% {
+                background: linear-gradient(80deg, #96c93d, #00b09b);
+            }
+        }
+
+        .content{
+            text-align: center;
+            display: absolute;
+            position: relative;
+           
+        }
+
+        form{
+            display: flex;
+			flex-direction: column;
+            position: relative;
+            overflow: hidden;
+            background-color: #eeeeee;
+            padding: 20px 30px;
+            overflow: hidden;
+            width: 345px;
+            border-radius: 15px;
+            top: 10px;
+            border: 1px solid rgb(141, 141, 141);
+            top: 30px;
+            position: relative;
+            
+            
+            
+
+        }
+        label{
+            /* left: -90px; */
+            text-align: left;
+            margin: 10px;
+            position: relative;
+        }
+
+        input{
+            padding: 10px 15px;
+            width: 320px;
+            margin-bottom: 0px;
+            border-radius: 6px;
+            border: 1px solid rgb(119, 119, 119);
+            display: flex;
+            position: relative;
+           
+            
+        }
+
+        .click{
+            margin: 10px;
+            background-color: rgb(4, 162, 4);
+            color: #fff;
+            border: none;
+            font-size: 15px;
+            font-weight: bold;
+            padding: 10px 20px;
+            border-radius: 6px;
+            margin: 5px;
+            width: 341px;
+            cursor: pointer;
+
+        }
+
+        .click:hover{
+            background-color: rgb(5, 134, 5);
+        }
+
+        textarea{
+            padding: 10px 15px;
+            width: 322px;
+            height: 50px;
+            margin-bottom: 10px;
+            border-radius: 6px;
+            border: 1px solid rgb(122, 121, 121);
+            position: relative;
+
+        }
+
+        .line{
+            font-size: 10px;
+            color: rgb(33, 33, 33);
+            margin: 6px;
+        }
+
+         /* Particle.js container */
+         #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+	
+	</style>
+</head>
+<body>
+    <div id="particles-js"></div>
+
+	<div class="content">
+        <center>
+        <form method="post" action="" name="data" id="data">
+            <h1>REGISTER HERE</h1>
+            
+            <label for="naem">Name*</label>
+            <input class="fil" type="text" name="Name" placeholder="Enter Name" required>
+
+            <label for="naem">Email*</label>
+            <input class="fil" type="email" name="Email" placeholder="Enter email" required>
+
+            <label for="naem">Mobile number*</label>
+            <input class="fil" type="number" name="Mobile number" placeholder="Enter mobile number" required>
+
+            <label for="naem">Location*</label>
+            <input class="fil" type="text" name="Location" placeholder="Enter Location">
+
+            <button class="click">Submit &#10132;</button>
+            
+            <p style="  font-size: 10px; color: rgb(33, 33, 33); margin: 6px;">Project_EarthQuake</p>
+
+        </form>
+        </center>
+      
+    </div>
+    <script>
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbyyzbwd8GdKY9HN91RsJxnlEKBcI_x6Y2UUwUB0beN1lILw118SthjGGbAKB5GJ_5vXZQ/exec'
+        const form = document.forms['data']
+      
+        form.addEventListener('submit', e => {
+          e.preventDefault()
+          fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+            .then(response => alert("Thank you! your form is submitted successfully." ))
+            .then(() => {  window.location.reload(); })
+            .catch(error => console.error('Error!', error.message))
+        })
+      </script>
+    <!-- <br> -->
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#ffffff'
+                },
+                shape: {
+                    type: 'circle',
+                    stroke: {
+                        width: 0,
+                        color: '#000000'
+                    },
+                    polygon: {
+                        nb_sides: 5
+                    }
+                },
+                opacity: {
+                    value: 0.5,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: false,
+                        speed: 40,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#ffffff',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 6,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'repulse'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 400,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    bubble: {
+                        distance: 400,
+                        size: 40,
+                        duration: 2,
+                        opacity: 8,
+                        speed: 3
+                    },
+                    repulse: {
+                        distance: 200,
+                        duration: 0.4
+                    },
+                    push: {
+                        particles_nb: 4
+                    },
+                    remove: {
+                        particles_nb: 2
+                    }
+                }
+            },
+            retina_detect: true
+        });
+    </script>
+
+
+
+</body>
+</html>
+

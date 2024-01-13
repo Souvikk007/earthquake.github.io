@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="styles.css">
+    <title>Earthquake Information</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="main.js"></script>
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            background: linear-gradient(45deg, #00b09b, #96c93d); /* Gradient background */
+            animation: colorChange 10s infinite alternate; /* Animation for color change */
+        }
+
+        @keyframes colorChange {
+            0% {
+                background: linear-gradient(45deg, #00b09b, #96c93d);
+            }
+            100% {
+                background: linear-gradient(45deg, #96c93d, #00b09b);
+            }
+        }
+
+        header {
+            text-align: center;
+            padding: 2rem;
+            background-color: #333;
+            color: #fff;
+        }
+
+        section {
+            padding: 2rem;
+        }
+
+        .earthquake-card {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            text-align: center;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        #mapAndGraphContainer {
+            display: flex;
+        }
+
+        /* Styles for the map */
+        #mapContainer {
+            width: 500px; /* Adjust as needed */
+            height: 600px; /* Set the desired height */
+            margin: 20px;
+        }
+
+        /* Styles for the graph container */
+        #graphContainer {
+            margin: 70px;
+            margin-left: auto;
+        }
+
+        #myChart {
+            width: 700px; /* Set the desired width */
+            height: 400px; /* Set the desired height */
+        }
+
+        footer {
+            text-align: center;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 1rem;
+            background-color: #333;
+            color: #fff;
+        }
+
+        footer a {
+            color: white !important;
+            
+        }
+
+        /* Particle.js container */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+
+<body>
+
+    <div id="particles-js"></div>
+
+    <header>
+        <h1>Earthquake Information</h1>
+    </header>
+
+    <section>
+        <div class="earthquake-card">
+            <h2> Welcome to our Earthquake Information Center </h2>
+           
+        </div>
+
+       
+<head>
+   
+    <title>Indian Map</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: auto;
+        }
+
+        #mapContainer {
+            position: relative;
+            width: 500px; /* Increase the width for better visibility */
+            height: 600px; /* Set the desired width */
+            margin: 20px 0 20px 20px;
+        }
+
+        #indianMap {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        #infoDisplay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.8);
+            font-size: 16px;
+        }
+
+        .latitude-info {
+            color: blue;
+        }
+
+        .earthquake-info {
+            color: red;
+        }
+
+    </style>
+</head>
+<body>
+<div class="earthquake-card">
+    <div id="mapAndGraphContainer">
+    <div id="mapContainer">
+        <img id="indianMap" src="https://www.mapsofindia.com/images2/india-map-2019.jpg" alt="Indian Map">
+        <div id="infoDisplay">
+            <p class="latitude-info">Latitude: <span id="latitudeValue">N/A</span></p>
+            <p class="earthquake-info">Earthquake Percentage: <span id="earthquakePercentage">N/A</span></p>
+        </div>
+    </div>
+    <div id="graphContainer">
+        <canvas id="myChart" width="600" height="300"></canvas>
+        <p style="text-align: center; margin-top: 10px; font-weight: bold; color: #333;">Voltage vs Time</p>
+    </div>
+    </div>
+    </div>
+</div>
+
+</div>
+
+    <script>
+        const mapContainer = document.getElementById('mapContainer');
+        const indianMap = document.getElementById('indianMap');
+        const infoDisplay = document.getElementById('infoDisplay');
+        const latitudeValue = document.getElementById('latitudeValue');
+        const earthquakePercentage = document.getElementById('earthquakePercentage');
+
+        mapContainer.addEventListener('mousemove', (event) => {
+            const rect = mapContainer.getBoundingClientRect();
+            const x = event.clientX - rect.left;
+            const y = event.clientY - rect.top;
+
+            // Assuming the map covers the entire latitude range of India (approx.)
+            const latitude = (y / rect.height) * 30.0; // Adjust as needed
+
+            // Simulated earthquake percentage (replace this with actual data)
+            const earthquakePercent = Math.random() * 100;
+
+            latitudeValue.textContent = latitude.toFixed(4);
+            earthquakePercentage.textContent = earthquakePercent.toFixed(2) + '%';
+
+            // Change text color based on earthquake percentage
+            if (earthquakePercent < 30) {
+                earthquakePercentage.className = 'earthquake-info'; // Low earthquake percentage (green)
+            } else if (earthquakePercent < 70) {
+                earthquakePercentage.className = 'earthquake-info'; // Medium earthquake percentage (orange)
+            } else {
+                earthquakePercentage.className = 'earthquake-info'; // High earthquake percentage (red)
+            }
+        });
+
+        mapContainer.addEventListener('mouseout', () => {
+            latitudeValue.textContent = 'N/A';
+            earthquakePercentage.textContent = 'N/A';
+        });
+    </script>
+
+</body>
+
+    <footer>
+        <p>&copy; 2023 Earthquake Information </p>
+        <p><a href="Form.html" class="registration-link">CLICK HERE TO REGISTER</a></p>
+    </footer>
+    
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: 80,
+                    density: {
+                        enable: true,
+                        value_area: 800
+                    }
+                },
+                color: {
+                    value: '#ffffff'
+                },
+                shape: {
+                    type: 'circle',
+                    stroke: {
+                        width: 0,
+                        color: '#000000'
+                    },
+                    polygon: {
+                        nb_sides: 5
+                    }
+                },
+                opacity: {
+                    value: 0.5,
+                    random: true,
+                    anim: {
+                        enable: true,
+                        speed: 1,
+                        opacity_min: 0.1,
+                        sync: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: false,
+                        speed: 40,
+                        size_min: 0.1,
+                        sync: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#ffffff',
+                    opacity: 0.4,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 6,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                    attract: {
+                        enable: false,
+                        rotateX: 600,
+                        rotateY: 1200
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'repulse'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 400,
+                        line_linked: {
+                            opacity: 1
+                        }
+                    },
+                    bubble: {
+                        distance: 400,
+                        size: 40,
+                        duration: 2,
+                        opacity: 8,
+                        speed: 3
+                    },
+                    repulse: {
+                        distance: 200,
+                        duration: 0.4
+                    },
+                    push: {
+                        particles_nb: 4
+                    },
+                    remove: {
+                        particles_nb: 2
+                    }
+                }
+            },
+            retina_detect: true
+        });
+    </script>
+      <script>
+        let currentGraph = null;
+        let currentGraphIndex = 0;
+
+        const graphData = [
+            {
+                label: 'Graph 1',
+                data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                tension: 0.4,
+            },
+            {
+                label: 'Graph 2',
+                data: [1, 1, 2, 4, 2, 1, 4, 2, 2, 1],
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                tension: 0.4,
+            },
+            {
+                label: 'Graph 3',
+                data: [1, 5, 9, 4   , 6, 9, 4, 6, 3, 5],
+                backgroundColor: 'rgba(255, 206, 86, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1,
+                tension: 0.4,
+            }
+        ];
+
+        function showGraph() {
+            if (currentGraph !== null) {
+                currentGraph.destroy();
+            }
+
+            const canvas = document.getElementById('myChart');
+            const ctx = canvas.getContext('2d');
+
+            const data = graphData[currentGraphIndex];
+
+            currentGraph = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100'],
+                    datasets: [data]
+                },
+                options: {
+                    animation: false,
+                    scales: {
+                        y: {
+                            suggestedMin: 0,
+                            suggestedMax: 10,
+                            beginAtZero: true,
+                            grid: {
+                                display: false,
+                            }
+                        },
+                        x: {
+                            grid: {
+                                display: false,
+                            }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            enabled: false
+                        }
+                    },
+                    elements: {
+                        point: {
+                            radius: 0
+                        }
+                    }
+                }
+            });
+        }
+
+        function updateGraph() {
+    const data = graphData[currentGraphIndex];
+    data.data.push(data.data[0]); // Add the first element to the end
+    data.data.shift(); // Remove the first element
+    showGraph();
+}
+
+        
+
+        showGraph();
+        setInterval(updateGraph, 500); // Update every second
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === '1' || event.key === '2' || event.key === '3') {
+                currentGraphIndex = parseInt(event.key) - 1;
+                showGraph();
+            }
+        });
+    </script>
+
+</body>
+
+</html>
