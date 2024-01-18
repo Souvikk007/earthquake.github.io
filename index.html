@@ -6,8 +6,10 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
     <title>Earthquake Information</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="main.js"></script>
-    
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
+
     <style>
         body {
             margin: 0;
@@ -38,6 +40,8 @@
             padding: 2rem;
         }
 
+       
+
         .earthquake-card {
             background: rgba(255, 255, 255, 0.9);
             border-radius: 10px;
@@ -45,28 +49,6 @@
             padding: 1rem;
             margin-bottom: 1rem;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-        }
-
-        #mapAndGraphContainer {
-            display: flex;
-        }
-
-        /* Styles for the map */
-        #mapContainer {
-            width: 500px; /* Adjust as needed */
-            height: 600px; /* Set the desired height */
-            margin: 20px;
-        }
-
-        /* Styles for the graph container */
-        #graphContainer {
-            margin: 70px;
-            margin-left: auto;
-        }
-
-        #myChart {
-            width: 700px; /* Set the desired width */
-            height: 400px; /* Set the desired height */
         }
 
         footer {
@@ -82,6 +64,18 @@
             color: white !important;
             
         }
+        #chartContainer {
+    width: 500px; /* Set your preferred width */
+    height: 400px; /* Set your preferred height */
+    margin-left: auto;
+    margin-right: 50px;
+    margin-top: 50px; /* Set to a fixed value to move it to the top */
+    border: 1px solid #ddd;
+}
+
+
+
+
 
         /* Particle.js container */
         #particles-js {
@@ -89,131 +83,146 @@
             width: 100%;
             height: 100%;
         }
+        nav {
+            background-color: #333;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .tabs {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            display: inline-block; /* Make the buttons horizontally aligned */
+        }
+
+        .tabs li {
+             display: inline-block;
+            margin-right: 5px; /* Add some spacing between buttons */
+        }
+
+        .tabs a {
+            display: block;
+            color: white;
+            text-align: center;
+            padding: 12px 20px;
+            text-decoration: none;
+           /* background-color: #555; /* Default background color */
+            transition: background-color 0.3s; /* Add transition for smooth color change */
+            font-size: 16px; /* Font size */
+            cursor: pointer; /* Add pointer cursor on hover */
+        }
+
+        .tabs a:hover {
+            background-color: #f90505; /* Change background color on hover */
+        }
+        #map {
+            flex: 1;
+            height: 100vh; /* Adjust the height as needed */
+            width: 50%;
+        }
+        #graphContainer {
+            margin: 70px;
+            margin-left: auto;
+        }
+
+        
     </style>
 </head>
 
 
-<body>
+    
+    <body style="overflow: auto;">
 
     <div id="particles-js"></div>
 
     <header>
         <h1>Earthquake Information</h1>
     </header>
+    <nav>
+        <ul class="tabs" id="tabsList">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="graph.html">Graph</a></li>
+            <li><a href="services.html">Services</a></li>
+            <li><a href="about.html">About Us</a></li>
+        </ul>
+    </nav>
 
-    <section>
-        <div class="earthquake-card">
-            <h2> Welcome to our Earthquake Information Center </h2>
-           
-        </div>
 
-       
-<head>
-   
-    <title>Indian Map</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-            overflow: auto;
-        }
+        <section>
+            <div class="earthquake-card">
+                <h2> Welcome to our Earthquake Information Center </h2>
+               
+            </div>
+    
+    
+            <div class="earthquake-card" style="display: flex;">
+                <!-- Map container -->
+                <div id="map" style="flex: 1; height: 100vh;"></div>
+        
+                <div id="graphContainer">
+                    <canvas id="myChart" width="600" height="300"></canvas>
+                    <p style="text-align: center; margin-top: 10px; font-weight: bold; color: #333;">Magnitude vs Time</p>
+                </div>
+            </div>
+        </section>
+        
 
-        #mapContainer {
-            position: relative;
-            width: 500px; /* Increase the width for better visibility */
-            height: 600px; /* Set the desired width */
-            margin: 20px 0 20px 20px;
-        }
-
-        #indianMap {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        #infoDisplay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            padding: 10px;
-            background-color: rgba(255, 255, 255, 0.8);
-            font-size: 16px;
-        }
-
-        .latitude-info {
-            color: blue;
-        }
-
-        .earthquake-info {
-            color: red;
-        }
-
-    </style>
-</head>
-<body>
-<div class="earthquake-card">
-    <div id="mapAndGraphContainer">
-    <div id="mapContainer">
-        <img id="indianMap" src="https://www.mapsofindia.com/images2/india-map-2019.jpg" alt="Indian Map">
-        <div id="infoDisplay">
-            <p class="latitude-info">Latitude: <span id="latitudeValue">N/A</span></p>
-            <p class="earthquake-info">Earthquake Percentage: <span id="earthquakePercentage">N/A</span></p>
-        </div>
-    </div>
-    <div id="graphContainer">
-        <canvas id="myChart" width="600" height="300"></canvas>
-        <p style="text-align: center; margin-top: 10px; font-weight: bold; color: #333;">Voltage vs Time</p>
-    </div>
-    </div>
-    </div>
-</div>
-
-</div>
-
+            <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script>
-        const mapContainer = document.getElementById('mapContainer');
-        const indianMap = document.getElementById('indianMap');
-        const infoDisplay = document.getElementById('infoDisplay');
-        const latitudeValue = document.getElementById('latitudeValue');
-        const earthquakePercentage = document.getElementById('earthquakePercentage');
+        // Initialize the map
+        var map = L.map('map').setView([20.5937, 78.9629], 5); // Centered on India, zoom level 5
 
-        mapContainer.addEventListener('mousemove', (event) => {
-            const rect = mapContainer.getBoundingClientRect();
-            const x = event.clientX - rect.left;
-            const y = event.clientY - rect.top;
 
-            // Assuming the map covers the entire latitude range of India (approx.)
-            const latitude = (y / rect.height) * 30.0; // Adjust as needed
+        // Add a tile layer (you can use other tile providers)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
 
-            // Simulated earthquake percentage (replace this with actual data)
-            const earthquakePercent = Math.random() * 100;
+        // Example markers (replace with your actual sensor locations and details)
+        var sensors = [
+            { name: 'Sensor 1', lat: 22.5726, lon: 88.3639, state: 'West Bengal', details: 'This is Sensor 1. It is located in Kolkata.' },
+            { name: 'Sensor 2', lat: 12.9716, lon: 77.5946, state: 'Karnataka', details: 'This is Sensor 2. It is located in Bangalore.' },
+            { name: 'Sensor 3', lat: 18.5204, lon: 73.8567, state: 'Maharashtra', details: 'This is Sensor 3. It is located in Pune.' },
+            // Add more sensors as needed
+        ];
 
-            latitudeValue.textContent = latitude.toFixed(4);
-            earthquakePercentage.textContent = earthquakePercent.toFixed(2) + '%';
+        var sensorDetailsElement = document.getElementById('sensorDetails');
 
-            // Change text color based on earthquake percentage
-            if (earthquakePercent < 30) {
-                earthquakePercentage.className = 'earthquake-info'; // Low earthquake percentage (green)
-            } else if (earthquakePercent < 70) {
-                earthquakePercentage.className = 'earthquake-info'; // Medium earthquake percentage (orange)
-            } else {
-                earthquakePercentage.className = 'earthquake-info'; // High earthquake percentage (red)
-            }
-        });
+        sensors.forEach(sensor => {
+            var marker = L.marker([sensor.lat, sensor.lon]).addTo(map);
 
-        mapContainer.addEventListener('mouseout', () => {
-            latitudeValue.textContent = 'N/A';
-            earthquakePercentage.textContent = 'N/A';
+            marker.bindPopup(`
+                <b>${sensor.name}</b><br>
+                <i>Details:</i> ${sensor.details}<br>
+                <i>Latitude:</i> ${sensor.lat}<br>
+                <i>Longitude:</i> ${sensor.lon}
+            `);
+
+            marker.on('click', function () {
+                marker.openPopup();
+
+                
+            });
         });
     </script>
+  
 
-</body>
+   
+
+</section>
+
+
+
+
 
     <footer>
         <p>&copy; 2023 Earthquake Information </p>
         <p><a href="Form.html" class="registration-link">CLICK HERE TO REGISTER</a></p>
     </footer>
+
+    
+
     
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     <script>
@@ -323,14 +332,14 @@
             retina_detect: true
         });
     </script>
-      <script>
+     <script>
         let currentGraph = null;
         let currentGraphIndex = 0;
 
         const graphData = [
             {
                 label: 'Graph 1',
-                data: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                data: [0,0,0.1,0,0,0,0,0,0.1],
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
@@ -338,7 +347,7 @@
             },
             {
                 label: 'Graph 2',
-                data: [1, 1, 2, 4, 2, 1, 4, 2, 2, 1],
+                data: [1, 1, 2, 3, 2, 1, 4, 2, 2, 1],
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
                 borderColor: 'rgba(75, 192, 192, 1)',
                 borderWidth: 1,
@@ -367,15 +376,15 @@
             currentGraph = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['10', '20', '30', '40', '50', '60', '70', '80', '90', '100'],
+                    labels: ['0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1'],
                     datasets: [data]
                 },
                 options: {
                     animation: false,
                     scales: {
                         y: {
-                            suggestedMin: 0,
-                            suggestedMax: 10,
+                            suggestedMin: -0.5,
+                            suggestedMax: 0.5,
                             beginAtZero: true,
                             grid: {
                                 display: false,
@@ -426,4 +435,8 @@
 
 </body>
 
+</html>
+
+
+</body>
 </html>
